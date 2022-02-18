@@ -15,10 +15,13 @@ import Footer from './Footer';
 // import post1 from './blog-post.1.md';
 // import post2 from './blog-post.2.md';
 // import post3 from './blog-post.3.md';
-
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
+import SearchDrug from './SearchDrug';
 const sections = [
-  { title: 'Technology', url: '#' },
-  { title: 'Design', url: '#' },
+  { title: 'Search Drug', url: '#' },
+  { title: 'Manage Drug', url: '#' },
 
 ];
 
@@ -59,15 +62,7 @@ const sidebar = {
   archives: [
     { title: 'March 2020', url: '#' },
     { title: 'February 2020', url: '#' },
-    { title: 'January 2020', url: '#' },
-    { title: 'November 1999', url: '#' },
-    { title: 'October 1999', url: '#' },
-    { title: 'September 1999', url: '#' },
-    { title: 'August 1999', url: '#' },
-    { title: 'July 1999', url: '#' },
-    { title: 'June 1999', url: '#' },
-    { title: 'May 1999', url: '#' },
-    { title: 'April 1999', url: '#' },
+  
   ],
   social: [
     { name: 'GitHub', icon: GitHubIcon },
@@ -85,24 +80,10 @@ export default function Drug() {
       <Container maxWidth="lg">
         <Header title="Drug" sections={sections} />
         <main>
-          {/* <MainFeaturedPost post={mainFeaturedPost} /> */}
-          <Grid container spacing={4}>
-            {/* {featuredPosts.map((post) => (
-              <FeaturedPost key={post.title} post={post} />
-            ))} */}
-          </Grid>
-          <Grid container spacing={5} sx={{ mt: 3 }}>
-            {/* <Main title="From the firehose" posts={posts} /> */}
-            {/* <Sidebar
-              title={sidebar.title}
-              description={sidebar.description}
-              archives={sidebar.archives}
-              social={sidebar.social}
-            /> */}
-          </Grid>
+          <SearchDrug></SearchDrug>
         </main>
       </Container>
-      <Footer
+      <Footer 
         title="Footer"
         description="Something here to give the footer a purpose!"
       />

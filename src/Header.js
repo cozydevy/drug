@@ -12,12 +12,12 @@ function Header(props) {
 
   return (
     <React.Fragment>
-      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}  style={{ background: '#1974D2' }}>
        
         <Typography
           component="h2"
           variant="h5"
-          color="inherit"
+          color="#fff"
           align="center"
           noWrap
           sx={{ flex: 1 }}

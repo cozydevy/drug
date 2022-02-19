@@ -1,4 +1,4 @@
-import React ,{ useState }from 'react';
+import React ,{ useState,useEffect }from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -21,21 +21,38 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function SearchDrug() {
   const [drug, setDrug] = useState();
   const [otherDrug, setOtherDrug] = useState();
-  const newTo = { 
-    pathname: "/result", 
-    param1: "Par1" 
-  };
+  const [datadrug, setDatadrug] = useState();
+  const [dataOtherDrug, setDataOtherdrug] = useState();
 
+  useEffect(() => {
+    const getDrug = async () => {
+      const { data } = await axios.get(`/api/drug`);
 
+      setDatadrug(data.drug);
+      console.log(JSON.stringify(data.setDatadrug));
+    };
+
+    const getOtherDrug = async () => {
+      const { data } = await axios.get(`/api/otherdrug`);
+
+      setDataOtherdrug(data.otherdrug);
+      console.log(JSON.stringify(data.otherdrug));
+    };
+
+    getDrug();
+    getOtherDrug();
+
+  }, []);
+  
   return (
-    <Box py={5} >    
+    <Box p={4} >    
     
-    <Grid container spacing={2}  container
+    <Grid container spacing={2}  
   direction="row"
   justifyContent="center"
   alignItems="center">
-    <Stack spacing={2} sx={{ width: 500 }} spacing={6}>
-     <Grid sx={{textAlign:"center"}}> <Typography  variant="h4" component="h1">Drug Interactions Checker
+    <Stack spacing={2} sx={{ width: 500 }} spacing={2}>
+     <Grid sx={{textAlign:"center"}} > <Typography  variant="h4" component="h1" py={4}>Drug Interactions Checker
 </Typography></Grid>
     <Autocomplete
         freeSolo
@@ -56,7 +73,8 @@ export default function SearchDrug() {
 
           />
         )}
-      /> 
+      />  <Grid sx={{textAlign:"center"}}> <Typography  variant="h4" component="h1">+
+      </Typography></Grid>
       <Autocomplete
         freeSolo
         id="free-solo-2-demo"
@@ -80,12 +98,12 @@ export default function SearchDrug() {
         )}
       /> <Grid sx={{textAlign:"center"}}> 
 
-<Button sx={{ width: 300 }}  variant="contained"
+<Button sx={{ width: 500,height:60 }}  variant="contained"
   component={Link}
 
   to={{
     pathname: "/result/search",
-    state: { id:"zz",id2:"222" }
+    state: { drug:"zz",id2:"222" }
 }}
 >Search</Button>
 

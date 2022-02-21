@@ -8,7 +8,8 @@ import { Typography } from '@mui/material';
 export default function Result() {
   const location = useLocation();
 
-  console.log(location.state.id)
+  console.log(location.state)
+ 
 
 
   return (

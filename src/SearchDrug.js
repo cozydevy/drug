@@ -1,6 +1,6 @@
 import React ,{ useState,useEffect }from 'react';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -18,15 +18,18 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
-  const options = ['Option 1', 'Option 2'];
+  const options1 = ['Option 1', 'Option 2'];
 
 export default function SearchDrug() {
-  const [drug, setDrug] = useState(options[0]);
+  const [drug, setDrug] = useState();
   const [otherDrug, setOtherDrug] = useState();
   const [datadrug, setDatadrug] = useState([]);
-  const [dataOtherDrug, setDataOtherdrug] = useState();
-  const [value, setValue] = React.useState(options[0]);
-  const [inputValue, setInputValue] = React.useState('');
+  const [dataOtherDrug, setDataOtherdrug] = useState([]);
+  
+  const [selectedDrug, setSelectedDrug] = useState({});
+  const [selectedotherDrug, setSelectedotherDrug] = useState({});
+
+
   useEffect(() => {
     const getDrug = async () => {
       const { data } = await axios.get(`/drug/api/drug/read.php`);
@@ -35,18 +38,20 @@ export default function SearchDrug() {
       console.log(JSON.stringify(data.drug));
     };
 
-    // const getOtherDrug = async () => {
-    //   const { data } = await axios.get(`/drug/api/otherdrug`);
+    const getOtherDrug = async () => {
+      const { data } = await axios.get(`/drug/api/otherdrug/read.php`);
 
-    //   setDataOtherdrug(data.otherdrug);
-    //   console.log(JSON.stringify(data.otherdrug));
-    // };
+      setDataOtherdrug(data.otherdrug);
+      console.log(JSON.stringify(data.otherdrug));
+    };
 
     getDrug();
-    // getOtherDrug();
+    getOtherDrug();
    
     
   }, []);
+  console.log(datadrug)
+
 
   return (
     <Box p={4} >    
@@ -55,49 +60,47 @@ export default function SearchDrug() {
   direction="row"
   justifyContent="center"
   alignItems="center">
+
     <Stack spacing={2} sx={{ width: 500 }} spacing={2}>
      <Grid sx={{textAlign:"center"}} > <Typography  variant="h4" component="h1" py={4}>Drug Interactions Checker
-</Typography></Grid>
-<div>{`inputValue: '${drug}'`}</div>
+</Typography>
 <Autocomplete
-        value={drug}
-        onChange={(event, newValue) => {
-          setDrug(newValue);
-        }}
-        // inputValue={drug}
-        // onInputChange={(event, newInputValue) => {
-        //   setDrug(newInputValue);
-        // }}
-        id="controllable-states-demo"
-        options={options}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Controllable" />}
-      
-      />  
-      
-      
+      id="Drug"
+      options={datadrug}
+
+      renderInput={params => (
+        <TextField {...params} label="Drug" variant="outlined" />
+      )}
+      getOptionLabel={option => option.drugname}
+            onChange={(_event, newDrug) => {
+        setSelectedDrug(newDrug);
+      }}
+    />
+
+</Grid>
+
+ 
+  
       <Grid sx={{textAlign:"center"}}> <Typography  variant="h4" component="h1">+
       </Typography></Grid>
-      <Autocomplete
-        freeSolo
-        id="free-solo-2-demo"
-        disableClearable
-        options={top100Films.map((option) => option.title)}
-        renderInput={(params) => (<TextField name="otherdrug" {...params}
-            label="Enter other drug"
-            InputProps={{...params.InputProps,type: 'search',}}
-            onChange={(e) => setOtherDrug(e.target.value)}
-
-          />
-        )}
-      /> <Grid sx={{textAlign:"center"}}> 
+    <Autocomplete
+      id="Other Drug"
+      options={dataOtherDrug}
+      renderInput={params => (
+        <TextField {...params} label="Other Drug" variant="outlined" />
+      )}
+      getOptionLabel={option => option.otherdrug}
+      onChange={(_event, newOtherDrug) => {
+        setSelectedotherDrug(newOtherDrug);
+      }}
+    /><Grid sx={{textAlign:"center"}}> 
 
 <Button sx={{ width: 500,height:60 }}  variant="contained"
   component={Link}
 
-  to={{
+  to={{ 
     pathname: "/result/search",
-    state: { drug:"zz",id2:"222" }
+    state: { iddrug:selectedDrug["id"],drug:selectedDrug["drugname"],idotherdrug:selectedotherDrug["id"],otherdrug:selectedotherDrug["otherdrug"]}
 }}
 >Search</Button>
 
@@ -114,14 +117,3 @@ export default function SearchDrug() {
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  
-];

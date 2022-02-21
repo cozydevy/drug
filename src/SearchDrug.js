@@ -21,29 +21,32 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function SearchDrug() {
   const [drug, setDrug] = useState();
   const [otherDrug, setOtherDrug] = useState();
-  const [datadrug, setDatadrug] = useState();
+  const [datadrug, setDatadrug] = useState([]);
   const [dataOtherDrug, setDataOtherdrug] = useState();
 
   useEffect(() => {
     const getDrug = async () => {
-      const { data } = await axios.get(`/api/drug`);
+      const { data } = await axios.get(`/drug/api/drug/read.php`);
 
       setDatadrug(data.drug);
-      console.log(JSON.stringify(data.setDatadrug));
+      console.log(JSON.stringify(data.drug));
     };
 
-    const getOtherDrug = async () => {
-      const { data } = await axios.get(`/api/otherdrug`);
+    // const getOtherDrug = async () => {
+    //   const { data } = await axios.get(`/drug/api/otherdrug`);
 
-      setDataOtherdrug(data.otherdrug);
-      console.log(JSON.stringify(data.otherdrug));
-    };
+    //   setDataOtherdrug(data.otherdrug);
+    //   console.log(JSON.stringify(data.otherdrug));
+    // };
 
     getDrug();
-    getOtherDrug();
-
+    // getOtherDrug();
+   
+    
   }, []);
-  
+  console.log(datadrug);
+  console.log(top100Films);
+
   return (
     <Box p={4} >    
     
@@ -58,7 +61,7 @@ export default function SearchDrug() {
         freeSolo
         id="free-solo-2-demo"
         disableClearable
-        options={top100Films.map((option) => option.title)}
+        options={datadrug.map((option) => option.drugname)}
         renderInput={(params) => (
           <TextField
           name="drug"

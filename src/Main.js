@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Markdown from './Markdown';
+import axios from "axios";
 
 function Main(props) {
   const { posts, title } = props;

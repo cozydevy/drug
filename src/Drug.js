@@ -30,10 +30,10 @@ export default function Drug() {
           <Content></Content>
      
       </Container>
-      <Footer 
+      {/* <Footer 
         title="Footer"
         description="Something here to give the footer a purpose!"
-      />
+      /> */}
     </ThemeProvider>
   );
 }

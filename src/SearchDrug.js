@@ -18,12 +18,15 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
+  const options = ['Option 1', 'Option 2'];
+
 export default function SearchDrug() {
-  const [drug, setDrug] = useState();
+  const [drug, setDrug] = useState(options[0]);
   const [otherDrug, setOtherDrug] = useState();
   const [datadrug, setDatadrug] = useState([]);
   const [dataOtherDrug, setDataOtherdrug] = useState();
-
+  const [value, setValue] = React.useState(options[0]);
+  const [inputValue, setInputValue] = React.useState('');
   useEffect(() => {
     const getDrug = async () => {
       const { data } = await axios.get(`/drug/api/drug/read.php`);
@@ -44,8 +47,6 @@ export default function SearchDrug() {
    
     
   }, []);
-  console.log(datadrug);
-  console.log(top100Films);
 
   return (
     <Box p={4} >    
@@ -57,44 +58,34 @@ export default function SearchDrug() {
     <Stack spacing={2} sx={{ width: 500 }} spacing={2}>
      <Grid sx={{textAlign:"center"}} > <Typography  variant="h4" component="h1" py={4}>Drug Interactions Checker
 </Typography></Grid>
-    <Autocomplete
-        freeSolo
-        id="free-solo-2-demo"
-        disableClearable
-        options={datadrug.map((option) => option.drugname)}
-        renderInput={(params) => (
-          <TextField
-          name="drug"
-
-            {...params}
-            label="Enter drug"
-            InputProps={{
-              ...params.InputProps,
-              type: 'search',
-            }}
-            onChange={(e) => setDrug(e.target.value)}
-
-          />
-        )}
-      />  <Grid sx={{textAlign:"center"}}> <Typography  variant="h4" component="h1">+
+<div>{`inputValue: '${drug}'`}</div>
+<Autocomplete
+        value={drug}
+        onChange={(event, newValue) => {
+          setDrug(newValue);
+        }}
+        // inputValue={drug}
+        // onInputChange={(event, newInputValue) => {
+        //   setDrug(newInputValue);
+        // }}
+        id="controllable-states-demo"
+        options={options}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Controllable" />}
+      
+      />  
+      
+      
+      <Grid sx={{textAlign:"center"}}> <Typography  variant="h4" component="h1">+
       </Typography></Grid>
       <Autocomplete
         freeSolo
         id="free-solo-2-demo"
         disableClearable
         options={top100Films.map((option) => option.title)}
-        renderInput={(params) => (
-          <TextField
-
-          name="otherdrug"
-
-            {...params}
+        renderInput={(params) => (<TextField name="otherdrug" {...params}
             label="Enter other drug"
-            InputProps={{
-              ...params.InputProps,
-              type: 'search',
-            }}
-
+            InputProps={{...params.InputProps,type: 'search',}}
             onChange={(e) => setOtherDrug(e.target.value)}
 
           />

@@ -18,7 +18,6 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
-  const options1 = ['Option 1', 'Option 2'];
 
 export default function SearchDrug() {
   const [drug, setDrug] = useState();
@@ -100,7 +99,7 @@ export default function SearchDrug() {
 
   to={{ 
     pathname: "/result/search",
-    state: { iddrug:selectedDrug["id"],drug:selectedDrug["drugname"],idotherdrug:selectedotherDrug["id"],otherdrug:selectedotherDrug["otherdrug"]}
+    state: { "iddrug":parseInt(selectedDrug["id"]),"drug":selectedDrug["drugname"],"idotherdrug":parseInt(selectedotherDrug["id"]),"otherdrug":selectedotherDrug["otherdrug"]}
 }}
 >Search</Button>
 

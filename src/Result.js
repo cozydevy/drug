@@ -37,7 +37,7 @@ export default function Result() {
       })
       .catch((error) => {
         console.log(error.response.status); // 401
-        console.log(error.response.data.error);
+        console.log(error.response.data.status);
       });
   };
   getInteract();

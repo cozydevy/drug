@@ -47,10 +47,12 @@ export default function SearchDrug() {
     getDrug();
     getOtherDrug();
    
-    
-  }, []);
-  console.log(datadrug)
+    console.log(datadrug)
 
+  }, []);
+
+console.log(selectedotherDrug);
+console.log(selectedDrug);
 
   return (
     <Box p={4} >    

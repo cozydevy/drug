@@ -27,7 +27,7 @@ function Header(props) {
        
        
       </Toolbar>
-      <Toolbar
+      {/* <Toolbar
         component="nav"
         variant="dense"
         sx={{ justifyContent: 'left', overflowX: 'auto' }}
@@ -44,7 +44,7 @@ function Header(props) {
             {section.title}
           </Link>
         ))}
-      </Toolbar>
+      </Toolbar> */}
     </React.Fragment>
   );
 }

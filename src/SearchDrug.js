@@ -10,14 +10,8 @@ import Stack from '@mui/material/Stack';
 import { Typography } from '@mui/material';
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
 export default function SearchDrug() {
   const [drug, setDrug] = useState();
@@ -28,26 +22,24 @@ export default function SearchDrug() {
   const [selectedDrug, setSelectedDrug] = useState({});
   const [selectedotherDrug, setSelectedotherDrug] = useState({});
 
-
+  
   useEffect(() => {
     const getDrug = async () => {
       const { data } = await axios.get(`/drug/api/drug/read.php`);
 
       setDatadrug(data.drug);
-      console.log(JSON.stringify(data.drug));
     };
 
     const getOtherDrug = async () => {
       const { data } = await axios.get(`/drug/api/otherdrug/read.php`);
 
       setDataOtherdrug(data.otherdrug);
-      console.log(JSON.stringify(data.otherdrug));
     };
 
     getDrug();
     getOtherDrug();
    
-    console.log(datadrug)
+    // console.log(datadrug)
 
   }, []);
 
@@ -56,7 +48,7 @@ console.log(selectedDrug);
 
   return (
     <Box p={4} >    
-    
+
     <Grid container spacing={2}  
   direction="row"
   justifyContent="center"
@@ -69,15 +61,18 @@ console.log(selectedDrug);
       id="Drug"
       options={datadrug}
 
-      renderInput={params => (
-        <TextField {...params} label="Drug" variant="outlined" />
-      )}
+     
       getOptionLabel={option => option.drugname}
             onChange={(_event, newDrug) => {
-        setSelectedDrug(newDrug);
+              if(newDrug!=null){
+                setSelectedDrug(newDrug);
+                }
       }}
-    />
 
+       renderInput={params => (
+        <TextField {...params} label="Enter Drug" variant="outlined" />
+      )}
+    />
 </Grid>
 
  
@@ -88,11 +83,13 @@ console.log(selectedDrug);
       id="Other Drug"
       options={dataOtherDrug}
       renderInput={params => (
-        <TextField {...params} label="Other Drug" variant="outlined" />
+        <TextField {...params} label="Enter Other Drug" variant="outlined" />
       )}
       getOptionLabel={option => option.otherdrug}
       onChange={(_event, newOtherDrug) => {
-        setSelectedotherDrug(newOtherDrug);
+        if(newOtherDrug!=null){
+          setSelectedotherDrug(newOtherDrug);
+        }
       }}
     /><Grid sx={{textAlign:"center"}}> 
 

@@ -40,7 +40,7 @@ export default function Result() {
     const getInteract = async (e) => {
       // e.preventDefault();
     await axios
-      .post("/drug/api/interact/read_one.php", bodyParameters)
+      .post("/api/interact/read_one.php", bodyParameters)
       .then((response) => {
         setDataInteract(response.data.interact);
         console.log(response.data);
@@ -56,7 +56,6 @@ export default function Result() {
 }, []);
 
 console.log("xxx"+JSON.stringify(dataInteract));
-console.log(typeof(dataInteract));
 const resultList = (dataInteract || []).map((item, i) => (
    <Grid >
    <Grid item xs={12}   py={2}><Chip label="summary" variant="outlined"color="primary" /></Grid>
@@ -78,7 +77,7 @@ const resultList = (dataInteract || []).map((item, i) => (
 
   return (
     <div>
-    <Grid   spacing={2} >
+    <Grid   spacing={2} py={9} px={1}>
 
 
 
@@ -92,8 +91,9 @@ const resultList = (dataInteract || []).map((item, i) => (
 
       <Stack direction="column" spacing={1} py={3}>
       
+      {resultList.length ? resultList : <Typography  variant="h6" component="h6" py={1}>Not found data this drug</Typography>}
 
-     {resultList}
+
 
       </Stack>
       <Stack direction="row" spacing={2}  alignItems="center"

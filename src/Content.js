@@ -3,6 +3,6 @@ import Routes from './Routes';
 
 export default function Content() {
   return (
- <Routes></Routes>
+ <Routes ></Routes>
   )
 }

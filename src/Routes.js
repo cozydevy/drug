@@ -7,14 +7,17 @@ import SearchDrug from "./SearchDrug";
 
 export default function Routes() {
     return (
-      <Switch>
-        <Route exact path="/">
-          <SearchDrug></SearchDrug>
-        </Route>
+      <BrowserRouter basename='/drug'>
+
+      <Switch >
+        <Route exact path="/" component={SearchDrug} />
+     
         {/* <Route exact path="/result/:drugname,:otherdrugname"  component={Result}/>   */}
           
         <Route path='/result/:id' exact component={Result} />
+        <Route path="*" render={() => "404 Not found!"} />
 
       </Switch>
+      </BrowserRouter>
     );
   }

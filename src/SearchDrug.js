@@ -25,13 +25,13 @@ export default function SearchDrug() {
   
   useEffect(() => {
     const getDrug = async () => {
-      const { data } = await axios.get(`/drug/api/drug/read.php`);
+      const { data } = await axios.get(`/api/drug/read.php`);
 
       setDatadrug(data.drug);
     };
 
     const getOtherDrug = async () => {
-      const { data } = await axios.get(`/drug/api/otherdrug/read.php`);
+      const { data } = await axios.get(`/api/otherdrug/read.php`);
 
       setDataOtherdrug(data.otherdrug);
     };
@@ -47,17 +47,18 @@ console.log(selectedotherDrug);
 console.log(selectedDrug);
 
   return (
-    <Box p={4} >    
+    <Box p={4} py={9}>    
 
     <Grid container spacing={2}  
   direction="row"
   justifyContent="center"
-  alignItems="center">
+  alignItems="center" >
 
-    <Stack spacing={2} sx={{ width: 500 }} spacing={2}>
-     <Grid sx={{textAlign:"center"}} > <Typography  variant="h4" component="h1" py={4}>Drug Interactions Checker
+    <Stack spacing={2} >
+     <Grid  sx={{textAlign:"center"}} > <Typography  variant="h4" component="h1" py={4}>Drug Interactions Checker
 </Typography>
-<Autocomplete
+
+<Autocomplete 
       id="Drug"
       options={datadrug}
 
@@ -77,8 +78,8 @@ console.log(selectedDrug);
 
  
   
-      <Grid sx={{textAlign:"center"}}> <Typography  variant="h4" component="h1">+
-      </Typography></Grid>
+      <Grid  sx={{textAlign:"center"}}> <Typography  variant="h4" component="h1">+
+      </Typography>
     <Autocomplete
       id="Other Drug"
       options={dataOtherDrug}
@@ -91,9 +92,11 @@ console.log(selectedDrug);
           setSelectedotherDrug(newOtherDrug);
         }
       }}
-    /><Grid sx={{textAlign:"center"}}> 
+    />
+    </Grid>
+    <Grid  sx={{textAlign:"center"}}> 
 
-<Button sx={{ width: 500,height:60 }}  variant="contained"
+<Button sx={{ width: "100%",height:60 }}   variant="contained"
   component={Link}
 
   to={{ 

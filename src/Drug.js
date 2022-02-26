@@ -1,34 +1,29 @@
-import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import Content from './Content';
+import Content from "./Content";
 
-import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
 
-import Header from './Header';
+import Header from "./Header";
 
-import Footer from './Footer';
+import Footer from "./Footer";
 
 const sections = [
-  { title: 'Search Drug', url: '#' },
-  { title: 'Manage Drug', url: '#' },
-
+  { title: "Search Drug", url: "#" },
+  { title: "Manage Drug", url: "#" },
 ];
 
 const theme = createTheme();
 
 export default function Drug() {
-  
   return (
-
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Drug" sections={sections} />
-    
-          <Content></Content>
-     
+
+        <Content></Content>
       </Container>
       {/* <Footer 
         title="Footer"

@@ -11,25 +11,54 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
 import axios from "axios";
+import { margin } from "@mui/system";
 export default function Admindrug() {
   const [datadrug, setDatadrug] = useState([]);
   const [drugname, setNewDrug] = useState("");
   const [editDrugname, seteditDrugname] = useState("");
 
   const [selectedDrug, setSelectedDrug] = useState({});
-  const [statusDrug, setStatusDrug] = useState();
+  const [statusDrug, setStatusDrug] = useState(false);
+  const getDrug = async () => {
+    const { data } = await axios.get(`/api/drug/read.php`);
+
+    setDatadrug(data.drug);
+  };
 
   useEffect(() => {
-    const getDrug = async () => {
-      const { data } = await axios.get(`/api/drug/read.php`);
-
-      setDatadrug(data.drug);
-    };
-
+    
     getDrug();
 
     // console.log(datadrug)
   }, [statusDrug]);
+
+
+
+  const ListDrug = () => {
+  
+    return (
+    
+       <div><Autocomplete
+       id="Drugall"
+       options={datadrug}
+       getOptionLabel={(option) => option.drugname}
+       onChange={(_event, newDrug) => {
+         if (newDrug != null) {
+           setSelectedDrug(newDrug);
+           seteditDrugname(newDrug.drugname);
+         }
+       }}
+       renderInput={(params) => (
+         <TextField
+           sx={{ width: 400, maxWidth: "100%" }}
+           {...params}
+           label="Select Drug"
+           variant="outlined"
+         />
+       )}
+     /></div>
+    );
+  }
 
   const addDrug = async (e) => {
     e.preventDefault();
@@ -60,6 +89,10 @@ export default function Admindrug() {
       .post("/api/drug/update.php", bodyParameters)
       .then((response) => {
         console.log(response);
+        setSelectedDrug("");
+        console.log(selectedDrug);
+        seteditDrugname(null)
+        setStatusDrug(!statusDrug);
 
         // window.location.reload();
       })
@@ -94,18 +127,20 @@ export default function Admindrug() {
         </Link>
       </Stack>
 
-      <Grid container  sx={{ textAlign: "center" }} py={2} spacing={2}>
+      <Grid container  sx={{ textAlign: "center" }} py={3} spacing={2}>
       <Grid item xs={12} >    <Typography variant="h5">Add new drug</Typography>  </Grid>
         <Grid item xs={12} >
-          <TextField
-            sx={{ width: 400, maxWidth: "100%" }}
+          <TextField 
+            sx={{ width: 400, maxWidth: "100%",my:1 }}
             id="drug"
             label="Enter Drug name"
             variant="outlined"
             onChange={(e) => setNewDrug(e.target.value)}
           />
           <Button
-            sx={{ height: 60 ,margin:2}}
+            sx={{ height: 60 ,m:1 }} 
+         
+
             variant="contained"
             onClick={addDrug}
           >
@@ -113,12 +148,13 @@ export default function Admindrug() {
           </Button>
         </Grid>
         </Grid>
+        <Divider />
 
-        <Grid container sx={{ textAlign: "center" }} spacing={2} p={2}>
+        <Grid container sx={{ textAlign: "center" }} spacing={2} py={2}>
         <Grid item xs={12} >    <Typography variant="h5">Edite or delete Drug</Typography>  </Grid>
 
           <Grid item xs={12}>
-            <Autocomplete
+            {/* <Autocomplete
               id="Drugall"
               options={datadrug}
               getOptionLabel={(option) => option.drugname}
@@ -130,20 +166,23 @@ export default function Admindrug() {
               }}
               renderInput={(params) => (
                 <TextField
-                  sx={{ width: 400, maxWidth: "90%" }}
+                  sx={{ width: 400, maxWidth: "100%" }}
                   {...params}
                   label="Select Drug"
                   variant="outlined"
                 />
               )}
-            />
+            /> */}
+
+         <div> <ListDrug/></div>  
           </Grid>
           <Grid item xs={12}>
             <TextField
-              sx={{ width: 400, maxWidth: "90%" }}
+              sx={{ width: 400, maxWidth: "100%" }}
               id="updatedrug"
               variant="outlined"
               value={editDrugname}
+              
               onChange={(e) => seteditDrugname(e.target.value)}
             />
           </Grid>

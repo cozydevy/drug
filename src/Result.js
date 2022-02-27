@@ -61,7 +61,6 @@ export default function Result() {
         <Chip label="summary" variant="outlined" color="primary" />
       </Grid>
       <Grid item xs={12} key={i}>
-        {" "}
         <Typography variant="h6" component="h6" p={1}>
           {item.summary}{" "}
         </Typography>{" "}
@@ -71,7 +70,6 @@ export default function Result() {
       </Grid>
 
       <Grid item xs={12} key={i}>
-        {" "}
         <Typography variant="h6" component="h6" p={1}>
           {item.severity}{" "}
         </Typography>{" "}

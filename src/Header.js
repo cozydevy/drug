@@ -9,13 +9,13 @@ import Link from "@mui/material/Link";
 import AppBar from "@mui/material/AppBar";
 
 function Header(props) {
-  const { sections, title } = props;
+  const { title } = props;
 
   return (
     <React.Fragment>
-      <AppBar>
-        <Toolbar>
-          <Typography
+      <AppBar >
+        <Toolbar >
+          <Typography 
             component="h4"
             variant="h5"
             color="#fff"
@@ -31,14 +31,6 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {
-  sections: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  title: PropTypes.string.isRequired,
-};
+
 
 export default Header;

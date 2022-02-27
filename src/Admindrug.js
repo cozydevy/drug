@@ -19,8 +19,6 @@ export default function Admindrug() {
   const [selectedDrug, setSelectedDrug] = useState({});
   const [statusDrug, setStatusDrug] = useState();
 
-
-
   useEffect(() => {
     const getDrug = async () => {
       const { data } = await axios.get(`/api/drug/read.php`);
@@ -33,12 +31,10 @@ export default function Admindrug() {
     // console.log(datadrug)
   }, [statusDrug]);
 
-
   const addDrug = async (e) => {
     e.preventDefault();
     const bodyParameters = JSON.stringify({
-      drugname: drugname
-      
+      drugname: drugname,
     });
     console.log(bodyParameters);
     await axios
@@ -56,10 +52,8 @@ export default function Admindrug() {
   const updateDrug = async (e) => {
     e.preventDefault();
     const bodyParameters = JSON.stringify({
-    
-      id : selectedDrug.id,
-      drugname: editDrugname
-      
+      id: selectedDrug.id,
+      drugname: editDrugname,
     });
     console.log(bodyParameters);
     await axios
@@ -75,7 +69,7 @@ export default function Admindrug() {
       });
   };
 
-console.log(editDrugname)
+  console.log(editDrugname);
 
   return (
     <div>
@@ -84,7 +78,7 @@ console.log(editDrugname)
       <Stack
         direction="row"
         spacing={2}
-        py={10}
+      paddingTop={10}
         justifyContent="center"
         alignItems="center"
         divider={<Divider orientation="vertical" flexItem />}
@@ -100,72 +94,80 @@ console.log(editDrugname)
         </Link>
       </Stack>
 
-      <Grid container sx={{ textAlign: "center" }} spacing={4}>
-        <Grid item xs={8}>
+      <Grid container  sx={{ textAlign: "center" }} py={2} spacing={2}>
+      <Grid item xs={12} >    <Typography variant="h5">Add new drug</Typography>  </Grid>
+        <Grid item xs={12} >
           <TextField
-            sx={{ width: 400, maxWidth: "90%" }}
+            sx={{ width: 400, maxWidth: "100%" }}
             id="drug"
             label="Enter Drug name"
             variant="outlined"
             onChange={(e) => setNewDrug(e.target.value)}
           />
-        </Grid>
-        <Grid xs={2} sx={{ textAlign: "center" }}>
           <Button
-            sx={{ width: "100%", height: 60 }}
+            sx={{ height: 60 ,margin:2}}
             variant="contained"
             onClick={addDrug}
-
           >
             Add Drug
           </Button>
         </Grid>
-        <Grid item xs={12}>
-          <Autocomplete
-            id="Drugall"
-            
-            options={datadrug}
-            getOptionLabel={(option) => option.drugname}
-            onChange={(_event, newDrug) => {
-              if (newDrug != null) {
-                setSelectedDrug(newDrug);
-                seteditDrugname(newDrug.drugname);
-
-              }
-            }}
-            renderInput={(params) => (
-              <TextField
-                sx={{ width: 400, maxWidth: "90%" }}
-                {...params}
-                label="Enter Drug"
-                variant="outlined"
-              />
-            )}
-          />
         </Grid>
-        <Grid item xs={8}>
-          <TextField
-            sx={{ width: 400, maxWidth: "90%" }}
-            id="updatedrug"
-            variant="outlined"
-             value={editDrugname}
-            onChange={(e) => seteditDrugname(e.target.value)}
-          />
-          
-         
 
-        </Grid>
-        <Grid xs={2} sx={{ textAlign: "center" }}>
-          <Button
-            sx={{ width: "100%", height: 60 }}
-            variant="contained"
-            onClick={updateDrug}
+        <Grid container sx={{ textAlign: "center" }} spacing={2} p={2}>
+        <Grid item xs={12} >    <Typography variant="h5">Edite or delete Drug</Typography>  </Grid>
 
-          >
-            Edite Drug
-          </Button>
+          <Grid item xs={12}>
+            <Autocomplete
+              id="Drugall"
+              options={datadrug}
+              getOptionLabel={(option) => option.drugname}
+              onChange={(_event, newDrug) => {
+                if (newDrug != null) {
+                  setSelectedDrug(newDrug);
+                  seteditDrugname(newDrug.drugname);
+                }
+              }}
+              renderInput={(params) => (
+                <TextField
+                  sx={{ width: 400, maxWidth: "90%" }}
+                  {...params}
+                  label="Select Drug"
+                  variant="outlined"
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              sx={{ width: 400, maxWidth: "90%" }}
+              id="updatedrug"
+              variant="outlined"
+              value={editDrugname}
+              onChange={(e) => seteditDrugname(e.target.value)}
+            />
+          </Grid>
         </Grid>
-      </Grid>
+
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item xs={12} sx={{ textAlign: "center" }} spacing={2}>
+            <Button
+              sx={{ height: 60, margin: 2 }}
+              variant="contained"
+              onClick={updateDrug}
+            >
+              Edite Drug
+            </Button>
+
+            <Button
+              sx={{ height: 60 }}
+              variant="contained"
+              onClick={updateDrug}
+            >
+              Delete
+            </Button>
+          </Grid>
+        </Grid>
     </div>
   );
 }

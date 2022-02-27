@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import Swal from 'sweetalert2'
 
 import axios from "axios";
 import { margin } from "@mui/system";
@@ -19,6 +20,10 @@ export default function Admindrug() {
 
   const [selectedDrug, setSelectedDrug] = useState({});
   const [statusDrug, setStatusDrug] = useState(false);
+  const [isDelete, setDelete] = useState(false);
+
+
+  
   const getDrug = async () => {
     const { data } = await axios.get(`/api/drug/read.php`);
 
@@ -102,6 +107,40 @@ export default function Admindrug() {
       });
   };
 
+  const fnDelete = async () => {
+    try {
+      const { data } = await axios.post("/api/drug/update.php");
+      setDelete(!isDelete);
+      console.log(isDelete);
+    } catch (error) {
+      console.log(error.response.status); // 401
+      console.log(error.response.data.error);
+    }
+  };
+
+  const confirmDelete = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will delete this drug!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fnDelete();
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        console.log(" Yes");
+      } else {
+        console.log(" No");
+      }
+    });
+  };
   console.log(editDrugname);
 
   return (
@@ -201,7 +240,7 @@ export default function Admindrug() {
             <Button
               sx={{ height: 60 }}
               variant="contained"
-              onClick={updateDrug}
+              onClick={confirmDelete}
             >
               Delete
             </Button>

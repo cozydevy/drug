@@ -74,7 +74,18 @@ export default function Admindrug() {
     await axios
       .post("/api/drug/create.php", bodyParameters)
       .then((response) => {
+
+        
         console.log(response);
+        setNewDrug("")
+        setStatusDrug(!statusDrug);
+        Swal.fire(
+       {   title: 'Success',
+       text: "Your add new drug success",
+       icon: 'success',
+       confirmButtonColor: '#3085d6',
+}
+        )
 
         // window.location.reload();
       })
@@ -96,8 +107,15 @@ export default function Admindrug() {
         console.log(response);
         setSelectedDrug("");
         console.log(selectedDrug);
-        seteditDrugname(null)
+        seteditDrugname("")
         setStatusDrug(!statusDrug);
+        Swal.fire(
+          {   title: 'Success',
+          text: "Your update  drug success",
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+   }
+           )
 
         // window.location.reload();
       })
@@ -108,9 +126,16 @@ export default function Admindrug() {
   };
 
   const fnDelete = async () => {
+    const bodyParameters = JSON.stringify({
+      id: selectedDrug.id
+    });
     try {
-      const { data } = await axios.post("/api/drug/update.php");
+      const { data } = await axios.post("/api/drug/delete.php",bodyParameters);
       setDelete(!isDelete);
+      seteditDrugname("")
+      setSelectedDrug("");
+      setStatusDrug(!statusDrug);
+
       console.log(isDelete);
     } catch (error) {
       console.log(error.response.status); // 401
@@ -174,6 +199,7 @@ export default function Admindrug() {
             id="drug"
             label="Enter Drug name"
             variant="outlined"
+            value={drugname}
             onChange={(e) => setNewDrug(e.target.value)}
           />
           <Button
